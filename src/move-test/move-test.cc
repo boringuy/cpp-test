@@ -3,45 +3,12 @@
 #include <string>
 #include <utility>
 
-struct Dummy
-{
-    std::string s;
-    int k;
- 
-    Dummy() : s("Test"), k(-1) {
-        std::cout << __PRETTY_FUNCTION__ << ": constructor" << std::endl;
-    }
-
-    Dummy(const Dummy& o) : s(o.s), k(o.k) {
-        std::cout << __PRETTY_FUNCTION__ << ": copy constructor" << std::endl;
-    }
-
-    Dummy& operator=(const Dummy& other)
-    {
-        std::cout << __PRETTY_FUNCTION__ << ": copy assignment" << std::endl;
-        return *this = other;
-    }
-
-    Dummy(Dummy&& o) noexcept :
-        s(std::move(o.s)),       // explicit move of a member of class type
-        k(std::exchange(o.k, 0)) // explicit move of a member of non-class type
-    {
-        std::cout << __PRETTY_FUNCTION__ << ": move constructor" << std::endl;
-    }
-
-    Dummy& operator=(Dummy&& o) noexcept
-    {
-        std::cout << __PRETTY_FUNCTION__ << ": move assignment" << std::endl;
-        s = std::move(o.s);
-        k = std::exchange(o.k, 0);
-        return *this;
-    }
-};
+#include "src/dummy/dummy.h"
 
 Dummy convertToLowerCase(Dummy obj)
 {
     // move the obj in and move it out instead of pass by reference
-    std::transform(obj.s.begin(), obj.s.end(), obj.s.begin(), [](unsigned char c){ return std::tolower(c); });
+    std::transform(obj.value.begin(), obj.value.end(), obj.value.begin(), [](unsigned char c){ return std::tolower(c); });
     return obj;
 }
 
@@ -54,14 +21,32 @@ std::tuple<bool, Dummy> tupleElisonTest()
 
 int main(int argc, char const *argv[])
 {
+#if 0
     Dummy test1;
     std::cout << "return by value instead of pass by reference" << std::endl; 
-    std::cout << "before: " << test1.s << std::endl; 
+    std::cout << "before: " << test1.value << std::endl; 
     test1 = convertToLowerCase(std::move(test1));
-    std::cout << "after: " << test1.s << std::endl; 
+    std::cout << "after: " << test1.value << std::endl; 
 
     std::cout << "tuple return test" << std::endl; 
     auto [ yes, test2 ] = tupleElisonTest();
+#endif
+ 
+    std::vector<Dummy> testv;
+    testv.reserve(10);
+    std::cout << "emplace_back test 1" << std::endl; 
+    testv.emplace_back(Dummy("emplace_back 1"));
 
+    std::cout << "emplace_back test 2" << std::endl; 
+    testv.emplace_back("emplace_back 2");
+
+    std::cout << "emplace_back test 3" << std::endl; 
+    testv.emplace_back(std::string("emplace_back 3"));
+
+    std::cout << "push_back test 1" << std::endl; 
+    testv.push_back(Dummy("push_back 1"));
+
+    std::cout << "push_back test 2" << std::endl; 
+    testv.push_back(std::string("push_back 2"));
     return 0;
 }
