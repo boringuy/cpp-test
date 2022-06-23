@@ -48,5 +48,7 @@ int main(int argc, char const *argv[])
 
     std::cout << "push_back test 2" << std::endl; 
     testv.push_back(std::string("push_back 2"));
+
+    std::cout << "done" << std::endl;
     return 0;
 }
