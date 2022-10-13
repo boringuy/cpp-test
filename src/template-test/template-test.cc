@@ -16,6 +16,10 @@ void lambdaTemplateAndRegularTemplate(func &&callback) {
     callback(x);
 }
 
+void autoLambda(auto &&callback) {
+    callback(6);
+}
+
 int main(int argc, char const *argv[])
 {
     int a = 1;
@@ -29,5 +33,7 @@ int main(int argc, char const *argv[])
 
     // the lambda can still be deduced automatically when mixing with regulatr template
     lambdaTemplateAndRegularTemplate<int>([](int x) { std::cout << "got: " << x << std::endl; });
+
+    autoLambda([](int x) { std::cout << "got: " << x << std::endl; });
     return 0;
 }
