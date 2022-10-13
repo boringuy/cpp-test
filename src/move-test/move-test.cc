@@ -1,7 +1,10 @@
 #include <algorithm>
 #include <iostream>
+#include <memory>
 #include <string>
 #include <utility>
+#include <stdio.h>
+#include <string.h>
 
 #include "src/dummy/dummy.h"
 
@@ -18,6 +21,19 @@ std::tuple<bool, Dummy> tupleElisonTest()
     // When constructing a tuple, individual obj needs to be moved
     return { true, std::move(test) };
 }
+
+struct DummyHolder {
+    DummyHolder(std::unique_ptr<Dummy> pointer):
+        m_pointer(std::move(pointer))
+    {
+    }
+
+    void print() {
+        std::cout << "print: " << m_pointer->value << std::endl;
+    }
+    std::unique_ptr<Dummy> m_pointer;
+
+};
 
 int main(int argc, char const *argv[])
 {
@@ -50,5 +66,9 @@ int main(int argc, char const *argv[])
     testv.push_back(std::string("push_back 2"));
 
     std::cout << "done" << std::endl;
+
+    DummyHolder holder(std::make_unique<Dummy>("unique_ptr move into constructor test"));
+    holder.print();
+
     return 0;
 }
