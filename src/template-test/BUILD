@@ -3,4 +3,5 @@ cc_binary(
     srcs = ["template-test.cc"],
     deps =[
     ],
+    copts = ["-fconcepts"],
 )

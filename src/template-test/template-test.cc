@@ -10,6 +10,10 @@ void lambdaTemplate(func &&callback) {
     callback(1);
 }
 
+template <typename func>
+bool lambdaTemplateWithReturnValue(func &&callback) {
+    return callback(1);
+}
 template <typename T, typename func>
 void lambdaTemplateAndRegularTemplate(func &&callback) {
     T x = 3;
@@ -30,6 +34,9 @@ int main(int argc, char const *argv[])
 
     // using template to accept lambda function
     lambdaTemplate([](int x) { std::cout << "got: " << x << std::endl; });
+
+    // return value needs to be explicitly specific
+    lambdaTemplateWithReturnValue([](int x) -> bool { return x > 10; } );
 
     // the lambda can still be deduced automatically when mixing with regulatr template
     lambdaTemplateAndRegularTemplate<int>([](int x) { std::cout << "got: " << x << std::endl; });
