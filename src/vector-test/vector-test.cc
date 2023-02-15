@@ -45,7 +45,11 @@ int main(int argc, char const *argv[])
     std::cout << "-- Erase item:" << std::endl;
     auto iter = dummyv.begin();
     dummyv.erase(iter);
-    std::cout << "-- Fisnish Erase item:" << std::endl;
+    std::cout << "-- Fisnish Erase item" << std::endl;
 
+    // cannot use random index, must allocate first 
+    std::vector<std::uint32_t> numbers(11);
+    numbers[10] = 1;
+    std::cout << "numbers[0] = " << numbers[0] << " numbers[10] = " << numbers[10] << std::endl;
     return 0;
 }
