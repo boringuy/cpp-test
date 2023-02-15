@@ -21,7 +21,12 @@ int main(int argc, char const *argv[])
         return -1;
     }
 
-    std::cout << "line: " << line << std::endl;
+    std::cout << "line 0: " << line << std::endl;
+
+    uint64_t lineNo = 1;
+    for (;getline(fs, line); line.clear(), ++lineNo) {
+        std::cout << lineNo << ": " << line << std::endl;
+    }
 
     return 0;
 }

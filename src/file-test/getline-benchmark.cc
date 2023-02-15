@@ -29,5 +29,33 @@ static void BM_GetLineReuseString(benchmark::State& state)
 
 BENCHMARK(BM_GetLineReuseString);
 
+static void BM_GetLineReuseStringClear(benchmark::State& state)
+{
+    std::istringstream input;
+    input.str("1\n2\n3\n4\n5\n6\n7\n");
+    std::string line;
+    for (auto _ : state ) {
+        for (; std::getline(input, line);) {
+            benchmark::DoNotOptimize(line);
+            line.clear();
+        }
+    }
+}	
+
+BENCHMARK(BM_GetLineReuseStringClear);
+
+static void BM_GetLineReuseStringClearInForStatement(benchmark::State& state)
+{
+    std::istringstream input;
+    input.str("1\n2\n3\n4\n5\n6\n7\n");
+    std::string line;
+    for (auto _ : state ) {
+        for (; std::getline(input, line); line.clear()) {
+            benchmark::DoNotOptimize(line);
+        }
+    }
+}	
+
+BENCHMARK(BM_GetLineReuseStringClearInForStatement);
 BENCHMARK_MAIN();
 
