@@ -35,6 +35,13 @@ struct DummyHolder {
 
 };
 
+Dummy UniversalReferenceTest(Dummy &&dummy) 
+{
+    Dummy test(std::move(dummy)); 
+
+    return test;
+}
+
 int main(int argc, char const *argv[])
 {
 #if 0
@@ -70,5 +77,11 @@ int main(int argc, char const *argv[])
     DummyHolder holder(std::make_unique<Dummy>("unique_ptr move into constructor test"));
     holder.print();
 
+    Dummy test1("test1");
+    // failed to compile without std::move
+    // auto test2 = UniversalReferenceTest(test1); 
+    auto test2 = UniversalReferenceTest(std::move(test1));
+    std::cout << "test1: " << test1.value << std::endl;
+    std::cout << "test2: " << test2.value << std::endl;
     return 0;
 }

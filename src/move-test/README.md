@@ -8,3 +8,4 @@ Various tests for std::move:
      (A) By Value: If you mean for a function to claim ownership of a unique_ptr, take it by value.
      (C) By const l-value reference: If you mean for a function to simply use the unique_ptr for the duration of that function's execution, take it by const&. Alternatively, pass a & or const& to the actual type pointed to, rather than using a unique_ptr.
      (D) By r-value reference: If a function may or may not claim ownership (depending on internal code paths), then take it by &&. But I strongly advise against doing this whenever possible.
+6) If an argument is universal reference "&&", you have to move when calling the function or it would fail to compile
