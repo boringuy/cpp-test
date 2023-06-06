@@ -83,5 +83,26 @@ int main(int argc, char const *argv[])
     auto test2 = UniversalReferenceTest(std::move(test1));
     std::cout << "test1: " << test1.value << std::endl;
     std::cout << "test2: " << test2.value << std::endl;
+
+    // moving shared ptr
+    auto dummyPtr = std::make_shared<Dummy>("testshared1");
+    auto dummerPtr = dummyPtr;
+    auto dummererPtr = std::move(dummerPtr);
+
+    if (dummyPtr) {
+    	std::cout << "dummyPtr ok: ref count: " << dummyPtr.use_count() << std::endl;
+    } else {
+    	std::cout << "dummyPtr null" << std::endl;
+    }
+    if (dummerPtr) {
+    	std::cout << "dummerPtr ok: ref count: " << dummerPtr.use_count() << std::endl;
+    } else {
+    	std::cout << "dummerPtr null" << std::endl;
+    }
+    if (dummererPtr) {
+    	std::cout << "dummererPtr ok: ref count: " << dummererPtr.use_count() << std::endl;
+    } else {
+    	std::cout << "dummererPtr null" << std::endl;
+    }
     return 0;
 }
