@@ -1,0 +1,3 @@
+- structural binding can be used when the return value is std::pair or std::tuple
+- pair this with auto, it makes code easier to read and maintain
+- can be used in for-each loop as well 
