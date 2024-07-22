@@ -3,6 +3,17 @@
 
 #include "src/dummy/dummy.h"
 
+template<typename T>
+void print2DArray(const T&a) {
+    for (auto &array : a ) {
+        std::cout << "[ ";
+        for (auto &value : array ) {
+            std::cout << value << " ";
+        }
+        std::cout << "]" << std::endl;
+    }
+}
+
 int main(int argc, char const *argv[])
 {
     std::vector<std::string> testv { "1", "2", "3" };
@@ -45,11 +56,20 @@ int main(int argc, char const *argv[])
     std::cout << "-- Erase item:" << std::endl;
     auto iter = dummyv.begin();
     dummyv.erase(iter);
-    std::cout << "-- Fisnish Erase item" << std::endl;
+    std::cout << "-- Finish Erase item" << std::endl;
 
     // cannot use random index, must allocate first 
     std::vector<std::uint32_t> numbers(11);
     numbers[10] = 1;
     std::cout << "numbers[0] = " << numbers[0] << " numbers[10] = " << numbers[10] << std::endl;
+
+    std::cout << "test 2d:" << std::endl;
+
+    int x = 3;
+    int y = 4;
+    std::vector<int> vector1(x, -1);
+    std::vector<std::vector<int>> vector2(y, vector1);
+    print2DArray(vector2);
+
     return 0;
 }
